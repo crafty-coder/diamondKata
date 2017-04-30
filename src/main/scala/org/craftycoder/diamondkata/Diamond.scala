@@ -4,22 +4,20 @@ object Diamond {
 
   def calculate(lastLetter: Char): String = {
 
-    val top: Seq[String] = for (letter <- 'A' to lastLetter) yield toLine(lastLetter)
+    val top: Seq[String] = for (letter <- 'A' to lastLetter) yield toLine(lastLetter,letter)
 
     val diamond =
-      if (isOdd(index(lastLetter) + 1)) top ++ top.drop(1)
+      if (isOdd(index(lastLetter) + 1)) top ++ top.reverse.drop(1)
       else top ++ top
 
     diamond.mkString("\n")
   }
 
-  private def toLine(lastLetter: Char): String = {
+  private def toLine(maxLetter: Char, letter: Char): String = {
+    val letterIndex = index(maxLetter) - index(letter)
+    val halfLine = " "*letterIndex + letter + " "*(index(maxLetter)-letterIndex)
 
-    val totalLen =
-      if (isOdd(index(lastLetter) + 1)) index(lastLetter) * 2 + 1
-      else (index(lastLetter) + 1) * 2
-
-    " " * totalLen
+    halfLine ++ halfLine.reverse.tail
   }
 
 

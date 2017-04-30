@@ -30,14 +30,25 @@ class DiamondTest extends WordSpec with Matchers {
       forAll(samples) { (letter: Char) =>
         val diamondLines = Diamond.calculate(letter).lines.toSeq
         val height: Int = diamondLines.size
-        println(s"$letter -> $height")
         diamondLines.foreach { (line: String) =>
-          println(s"$letter -> $line")
           line.length shouldBe height
         }
 
       }
 
     }
+
+    "have lines in the correct format depending of the letter" in {
+
+      Diamond.calculate('A').lines.toList(0) shouldBe "A"
+      Diamond.calculate('B').lines.toList(1) shouldBe "B  B"
+
+
+    }
   }
+
+  def isSymmetrical(line: String): Boolean = line.reverse.mkString == line
+
+
+
 }
